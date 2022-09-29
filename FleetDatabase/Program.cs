@@ -1,7 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using FleetDatabase.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<FleetDatabaseContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("FleetDatabaseContext") ?? throw new InvalidOperationException("Connection string 'FleetDatabaseContext' not found.")));
 
 var app = builder.Build();
 
